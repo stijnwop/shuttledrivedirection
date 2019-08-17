@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" standalone="no" ?>
+<modDesc descVersion="44">
+    <author>Wopster</author>
+    <version>1.0.0.0</version>
+    <title>
+		<en>ShuttleDriveDirection</en>
+    </title>
+    <description>
+	<en>
+		<![CDATA[ShuttleDriveDirection]]>
+	</en>
+    </description>
+
+	<iconFilename>icon.png</iconFilename>
+	
+    <multiplayer supported="true"/>
+     <extraSourceFiles>
+        <sourceFile filename="loader.lua"/>
+    </extraSourceFiles>
+	
+	<inputBinding>
+        <actionBinding action="TOGGLE_DRIVE_DIRECTION">
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_space" />
+        </actionBinding>
+    </inputBinding>    
+    
+    <actions>
+        <action name="TOGGLE_DRIVE_DIRECTION" />
+    </actions>
+
+    <l10n>
+        <text name="TOGGLE_DRIVE_DIRECTION">
+			<en>Toggle driving direction</en>
+			<de>Fahrtrichtung wechseln</de>
+		</text>
+		
+		<text name="action_toggle_drive_direction">
+			<en>Change driving direction</en>
+			<de>Fahrtrichtung wechseln</de>
+		</text>
+    </l10n>  
+</modDesc>
