@@ -29,7 +29,7 @@
     </actions>
 
     <l10n>
-        <text name="TOGGLE_DRIVE_DIRECTION">
+        <text name="input_TOGGLE_DRIVE_DIRECTION">
 			<en>Toggle driving direction</en>
 			<de>Fahrtrichtung wechseln</de>
 		</text>
