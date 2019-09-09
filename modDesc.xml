@@ -32,11 +32,13 @@
         <text name="input_TOGGLE_DRIVE_DIRECTION">
 			<en>Toggle driving direction</en>
 			<de>Fahrtrichtung wechseln</de>
+		<pl>Zmiana kierunku jazdy</pl>
 		</text>
 		
 		<text name="action_toggle_drive_direction">
 			<en>Change driving direction</en>
 			<de>Fahrtrichtung wechseln</de>
+			<pl>Zmień kierunek jazdy</pl>
 		</text>
     </l10n>  
 </modDesc>
