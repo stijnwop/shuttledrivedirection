@@ -25,6 +25,7 @@ function ShuttleDriveDirection.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "setOnNeutral", ShuttleDriveDirection.setOnNeutral)
     SpecializationUtil.registerFunction(vehicleType, "isOnNeutral", ShuttleDriveDirection.isOnNeutral)
     SpecializationUtil.registerFunction(vehicleType, "toggleShuttleDriveDirection", ShuttleDriveDirection.toggleShuttleDriveDirection)
+    SpecializationUtil.registerFunction(vehicleType, "setShuttleDriveDirection", ShuttleDriveDirection.setShuttleDriveDirection)
     SpecializationUtil.registerFunction(vehicleType, "setIsHoldingBrake", ShuttleDriveDirection.setIsHoldingBrake)
 end
 
@@ -171,6 +172,7 @@ function ShuttleDriveDirection:onLeaveVehicle()
         spec.overlayForwards:setVisible(false)
         spec.overlayBackwards:setVisible(false)
     end
+
     self:setOnNeutral()
 end
 
@@ -183,19 +185,25 @@ function ShuttleDriveDirection:getShuttleDriveDirection()
 end
 
 function ShuttleDriveDirection:setOnNeutral()
-    self.spec_shuttleDriveDirection.shuttleDirection = ShuttleDriveDirection.DIR_NEUTRAL
+    self:setShuttleDriveDirection(ShuttleDriveDirection.DIR_NEUTRAL)
 end
+
 function ShuttleDriveDirection:isOnNeutral()
     return self.spec_shuttleDriveDirection.shuttleDirection == ShuttleDriveDirection.DIR_NEUTRAL
 end
 
 function ShuttleDriveDirection:toggleShuttleDriveDirection()
-    local spec = self.spec_shuttleDriveDirection
-    if self:getShuttleDriveDirection() == ShuttleDriveDirection.DIR_NEUTRAL then
-        self.spec_shuttleDriveDirection.shuttleDirection = ShuttleDriveDirection.DIR_BACKWARDS
+    local direction = self:getShuttleDriveDirection()
+    if self:isOnNeutral() then
+        direction = ShuttleDriveDirection.DIR_BACKWARDS
     end
 
-    spec.shuttleDirection = -spec.shuttleDirection
+    self:setShuttleDriveDirection(-direction)
+end
+
+function ShuttleDriveDirection:setShuttleDriveDirection(direction)
+    local spec = self.spec_shuttleDriveDirection
+    spec.shuttleDirection = direction
 
     if spec.shuttleDirection ~= spec.shuttleDirectionSent then
         spec.shuttleDirectionSent = spec.shuttleDirection

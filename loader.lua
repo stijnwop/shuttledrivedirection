@@ -31,7 +31,7 @@ local function inj_actionEventAccelerate(vehicle, superFunc, actionName, inputVa
     spec.lastInputValues.axisAccelerate = axisAccelerate
 
     if vehicle.getHasGuidanceSystem ~= nil and vehicle:getHasGuidanceSystem() then
-        local guidanceSpec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+        local guidanceSpec = vehicle.spec_globalPositioningSystem
         if guidanceSpec.guidanceSteeringIsActive then
             guidanceSpec.axisAccelerate = axisAccelerate
         end
@@ -50,7 +50,7 @@ local function inj_actionEventBrake(vehicle, superFunc, actionName, inputValue, 
         end
 
         if vehicle.getHasGuidanceSystem ~= nil and vehicle:getHasGuidanceSystem() then
-            local guidanceSpec = vehicle:guidanceSteering_getSpecTable("globalPositioningSystem")
+            local guidanceSpec = vehicle.spec_globalPositioningSystem
             if guidanceSpec.guidanceSteeringIsActive then
                 local guidanceSignAxis = MathUtil.sign(guidanceSpec.axisForward)
                 if shuttleDirection == guidanceSignAxis or not guidanceSignAxis ~= 0 then
