@@ -41,7 +41,7 @@ local function inj_actionEventAccelerate(vehicle, superFunc, actionName, inputVa
 end
 
 local function inj_actionEventBrake(vehicle, superFunc, actionName, inputValue, ...)
-    if vehicle.lastSpeedReal > 0.0002 then
+    if vehicle:isHoldingBrake() and vehicle.lastSpeedReal > 0.0002 then
         -- Only brake when driving faster than 0.7km/h
         local spec = vehicle.spec_drivable
         local shuttleDirection = vehicle:getShuttleDriveDirection()
