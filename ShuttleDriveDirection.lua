@@ -27,6 +27,7 @@ function ShuttleDriveDirection.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "toggleShuttleDriveDirection", ShuttleDriveDirection.toggleShuttleDriveDirection)
     SpecializationUtil.registerFunction(vehicleType, "setShuttleDriveDirection", ShuttleDriveDirection.setShuttleDriveDirection)
     SpecializationUtil.registerFunction(vehicleType, "setIsHoldingBrake", ShuttleDriveDirection.setIsHoldingBrake)
+    SpecializationUtil.registerFunction(vehicleType, "isHoldingBrake", ShuttleDriveDirection.isHoldingBrake)
 end
 
 function ShuttleDriveDirection.registerEventListeners(vehicleType)
@@ -220,6 +221,10 @@ function ShuttleDriveDirection:setIsHoldingBrake(isHoldingBrake)
         spec.isHoldingBrakeSent = spec.isHoldingBrake
         self:raiseDirtyFlags(spec.dirtyFlag)
     end
+end
+
+function ShuttleDriveDirection:isHoldingBrake()
+    return self.spec_shuttleDriveDirection.isHoldingBrake
 end
 
 function ShuttleDriveDirection:onRegisterActionEvents(isActiveForInput, isActiveForInputIgnoreSelection)
