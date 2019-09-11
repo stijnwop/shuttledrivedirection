@@ -3,42 +3,42 @@
     <author>Wopster</author>
     <version>1.0.0.0</version>
     <title>
-		<en>ShuttleDriveDirection</en>
+        <en>ShuttleDriveDirection</en>
     </title>
     <description>
-	<en>
-		<![CDATA[ShuttleDriveDirection]]>
-	</en>
+        <en>
+            <![CDATA[ShuttleDriveDirection]]>
+        </en>
     </description>
 
-	<iconFilename>icon.png</iconFilename>
-	
+    <iconFilename>icon.png</iconFilename>
+
     <multiplayer supported="true"/>
-     <extraSourceFiles>
+    <extraSourceFiles>
         <sourceFile filename="loader.lua"/>
     </extraSourceFiles>
-	
-	<inputBinding>
+
+    <inputBinding>
         <actionBinding action="TOGGLE_DRIVE_DIRECTION">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_space" />
+            <binding device="KB_MOUSE_DEFAULT" input="KEY_space"/>
         </actionBinding>
-    </inputBinding>    
-    
+    </inputBinding>
+
     <actions>
-        <action name="TOGGLE_DRIVE_DIRECTION" />
+        <action name="TOGGLE_DRIVE_DIRECTION"/>
     </actions>
 
     <l10n>
         <text name="input_TOGGLE_DRIVE_DIRECTION">
-			<en>Toggle driving direction</en>
-			<de>Fahrtrichtung wechseln</de>
-		<pl>Zmiana kierunku jazdy</pl>
-		</text>
-		
-		<text name="action_toggle_drive_direction">
-			<en>Change driving direction</en>
-			<de>Fahrtrichtung wechseln</de>
-			<pl>Zmień kierunek jazdy</pl>
-		</text>
-    </l10n>  
+            <en>Toggle driving direction</en>
+            <de>Fahrtrichtung wechseln</de>
+            <pl>Zmiana kierunku jazdy</pl>
+        </text>
+
+        <text name="action_toggle_drive_direction">
+            <en>Change driving direction</en>
+            <de>Fahrtrichtung wechseln</de>
+            <pl>Zmień kierunek jazdy</pl>
+        </text>
+    </l10n>
 </modDesc>
