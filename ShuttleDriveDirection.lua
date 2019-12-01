@@ -202,6 +202,16 @@ function ShuttleDriveDirection:toggleShuttleDriveDirection()
     self:setShuttleDriveDirection(-direction)
 end
 
+function ShuttleDriveDirection:toggleShuttleDriveDirectionForward()
+    
+    self:setShuttleDriveDirection(ShuttleDriveDirection.DIR_FORWARDS)
+end
+
+function ShuttleDriveDirection:toggleShuttleDriveDirectionBackward()
+    
+    self:setShuttleDriveDirection(ShuttleDriveDirection.DIR_BACKWARDS)
+end
+
 function ShuttleDriveDirection:setShuttleDriveDirection(direction)
     local spec = self.spec_shuttleDriveDirection
     spec.shuttleDirection = direction
@@ -236,6 +246,14 @@ function ShuttleDriveDirection:onRegisterActionEvents(isActiveForInput, isActive
             local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TOGGLE_DRIVE_DIRECTION, self, ShuttleDriveDirection.toggleShuttleDriveDirection, false, true, false, true, nil)
             g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
             g_inputBinding:setActionEventText(actionEventId, g_i18n:getText("action_toggle_drive_direction"))
+
+			local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TOGGLE_DRIVE_FORWARD, self, ShuttleDriveDirection.toggleShuttleDriveDirectionForward, false, true, false, true, nil)
+            g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
+            g_inputBinding:setActionEventText(actionEventId, g_i18n:getText("action_toggle_drive_direction_forward"))
+
+			local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TOGGLE_DRIVE_BACKWARD, self, ShuttleDriveDirection.toggleShuttleDriveDirectionBackward, false, true, false, true, nil)
+            g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
+            g_inputBinding:setActionEventText(actionEventId, g_i18n:getText("action_toggle_drive_direction_backward"))
         end
     end
 end
