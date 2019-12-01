@@ -22,10 +22,18 @@
         <actionBinding action="TOGGLE_DRIVE_DIRECTION">
             <binding device="KB_MOUSE_DEFAULT" input="KEY_space"/>
         </actionBinding>
+        <actionBinding action="TOGGLE_DRIVE_FORWARD">
+          <binding device="KB_MOUSE_DEFAULT" input=""/>
+        </actionBinding>
+        <actionBinding action="TOGGLE_DRIVE_BACKWARD">
+          <binding device="KB_MOUSE_DEFAULT" input=""/>
+        </actionBinding>
     </inputBinding>
 
     <actions>
         <action name="TOGGLE_DRIVE_DIRECTION"/>
+        <action name="TOGGLE_DRIVE_FORWARD"/>
+        <action name="TOGGLE_DRIVE_BACKWARD"/>
     </actions>
 
     <l10n>
@@ -35,10 +43,26 @@
             <pl>Zmiana kierunku jazdy</pl>
         </text>
 
+        <text name="input_TOGGLE_DRIVE_FORWARD">
+          <en>Toggle driving direction to forward</en>
+        </text>
+
+        <text name="input_TOGGLE_DRIVE_BACKWARD">
+          <en>Toggle driving direction to backward</en>
+        </text>
+
         <text name="action_toggle_drive_direction">
             <en>Change driving direction</en>
             <de>Fahrtrichtung wechseln</de>
             <pl>Zmień kierunek jazdy</pl>
         </text>
+
+        <text name="action_toggle_drive_direction_forward">
+          <en>Forward</en>
+        </text>
+
+      <text name="action_toggle_drive_direction_backward">
+        <en>Backward</en>
+      </text>
     </l10n>
 </modDesc>
