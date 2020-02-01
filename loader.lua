@@ -46,11 +46,21 @@ local function inj_actionEventBrake(vehicle, superFunc, actionName, inputValue, 
     if vehicle:isHoldingBrake() and vehicle.lastSpeedReal > 0.0003 then
         -- Only brake when driving faster than 0.7km/h
         local spec = vehicle.spec_drivable
+        local reverseSpec = vehicle.spec_reverseDriving
         local shuttleDirection = vehicle:getShuttleDriveDirection()
         local signAxis = MathUtil.sign(spec.axisForward)
+        local reverseMode = 1
+        if reverseSpec ~= nil then
+            if reverseSpec.isReverseDriving then
+                reverseMode = -1
+            else
+                reverseMode = 1
+            end
+        end
+        print("Reverse mode: " .. reverseMode)
 
         if shuttleDirection == signAxis or not signAxis ~= 0 then
-            local axisBrake = MathUtil.clamp(inputValue, 0, 1) * shuttleDirection
+            local axisBrake = MathUtil.clamp(inputValue, 0, 1) * vehicle.movingDirection * reverseMode
             spec.lastInputValues.axisBrake = axisBrake
         end
 
@@ -59,7 +69,7 @@ local function inj_actionEventBrake(vehicle, superFunc, actionName, inputValue, 
             if guidanceSpec.guidanceSteeringIsActive then
                 local guidanceSignAxis = MathUtil.sign(guidanceSpec.axisForward)
                 if shuttleDirection == guidanceSignAxis or not guidanceSignAxis ~= 0 then
-                    guidanceSpec.axisBrake = MathUtil.clamp(inputValue, 0, 1) * shuttleDirection
+                    guidanceSpec.axisBrake = MathUtil.clamp(inputValue, 0, 1) * vehicle.movingDirection * reverseMode
                 end
             end
         end
