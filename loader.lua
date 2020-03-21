@@ -57,7 +57,6 @@ local function inj_actionEventBrake(vehicle, superFunc, actionName, inputValue, 
                 reverseMode = 1
             end
         end
-        print("Reverse mode: " .. reverseMode)
 
         if shuttleDirection == signAxis or not signAxis ~= 0 then
             local axisBrake = MathUtil.clamp(inputValue, 0, 1) * vehicle.movingDirection * reverseMode
