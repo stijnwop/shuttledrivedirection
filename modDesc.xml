@@ -33,12 +33,14 @@
             <en>Toggle driving direction</en>
             <de>Fahrtrichtung wechseln</de>
             <pl>Zmiana kierunku jazdy</pl>
+            <it>Alterna direzione di guida</it>
         </text>
 
         <text name="action_toggle_drive_direction">
             <en>Change driving direction</en>
             <de>Fahrtrichtung wechseln</de>
             <pl>Zmień kierunek jazdy</pl>
+            <it>Cambia direzione di guida</it>
         </text>
     </l10n>
 </modDesc>
