@@ -22,6 +22,7 @@ end
 
 function ShuttleDriveDirection.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getShuttleDriveDirection", ShuttleDriveDirection.getShuttleDriveDirection)
+    SpecializationUtil.registerFunction(vehicleType, "getShuttleDriveActive", ShuttleDriveDirection.getShuttleDriveActive)
     SpecializationUtil.registerFunction(vehicleType, "setOnNeutral", ShuttleDriveDirection.setOnNeutral)
     SpecializationUtil.registerFunction(vehicleType, "isOnNeutral", ShuttleDriveDirection.isOnNeutral)
     SpecializationUtil.registerFunction(vehicleType, "toggleShuttleDriveDirection", ShuttleDriveDirection.toggleShuttleDriveDirection)
@@ -53,6 +54,7 @@ function ShuttleDriveDirection:onLoad(savegame)
     spec.isHoldingBrakeSent = false
     spec.blinkTime = 0
     spec.doBlink = false
+    spec.active = false
 
     local speedMeter = g_currentMission.inGameMenu.hud.speedMeter
     local baseX, baseY = speedMeter.gaugeBackgroundElement:getPosition()
@@ -127,7 +129,7 @@ function ShuttleDriveDirection:onUpdate(dt)
             end
         end
 
-        if self.setBrakeLightsVisibility ~= nil then
+        if spec.active and self.setBrakeLightsVisibility ~= nil then
             self:setBrakeLightsVisibility(spec.isHoldingBrake)
         end
     end
@@ -160,16 +162,16 @@ function ShuttleDriveDirection:onStopMotor()
 end
 
 function ShuttleDriveDirection:onEnterVehicle()
-    if ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
-        local spec = self.spec_shuttleDriveDirection
+    local spec = self.spec_shuttleDriveDirection
+    if spec.active and ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
         spec.overlayForwards:setVisible(true)
         spec.overlayBackwards:setVisible(true)
     end
 end
 
 function ShuttleDriveDirection:onLeaveVehicle()
-    if ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
-        local spec = self.spec_shuttleDriveDirection
+    local spec = self.spec_shuttleDriveDirection
+    if spec.active and ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
         spec.overlayForwards:setVisible(false)
         spec.overlayBackwards:setVisible(false)
     end
@@ -183,6 +185,10 @@ end
 
 function ShuttleDriveDirection:getShuttleDriveDirection()
     return self.spec_shuttleDriveDirection.shuttleDirection
+end
+
+function ShuttleDriveDirection:getShuttleDriveActive()
+    return self.spec_shuttleDriveDirection.active
 end
 
 function ShuttleDriveDirection:setOnNeutral()
