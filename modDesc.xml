@@ -36,33 +36,6 @@
         <action name="TOGGLE_DRIVE_BACKWARD"/>
     </actions>
 
-    <l10n>
-        <text name="input_TOGGLE_DRIVE_DIRECTION">
-            <en>Toggle driving direction</en>
-            <de>Fahrtrichtung wechseln</de>
-            <pl>Zmiana kierunku jazdy</pl>
-        </text>
+    <l10n filenamePrefix="xml\translations\l10n"/>
 
-        <text name="input_TOGGLE_DRIVE_FORWARD">
-          <en>Toggle driving direction to forward</en>
-        </text>
-
-        <text name="input_TOGGLE_DRIVE_BACKWARD">
-          <en>Toggle driving direction to backward</en>
-        </text>
-
-        <text name="action_toggle_drive_direction">
-            <en>Change driving direction</en>
-            <de>Fahrtrichtung wechseln</de>
-            <pl>Zmień kierunek jazdy</pl>
-        </text>
-
-        <text name="action_toggle_drive_direction_forward">
-          <en>Forward</en>
-        </text>
-
-      <text name="action_toggle_drive_direction_backward">
-        <en>Backward</en>
-      </text>
-    </l10n>
 </modDesc>

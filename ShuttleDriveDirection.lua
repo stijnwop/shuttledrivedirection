@@ -132,6 +132,15 @@ function ShuttleDriveDirection:onUpdate(dt)
         if spec.active and self.setBrakeLightsVisibility ~= nil then
             self:setBrakeLightsVisibility(spec.isHoldingBrake)
         end
+
+        if g_ShuttleSettings.shuttleSettings.active.active ~= spec.active then
+            spec.active = g_ShuttleSettings.shuttleSettings.active.active;
+            if ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
+                spec.overlayForwards:setVisible(spec.active)
+                spec.overlayBackwards:setVisible(spec.active)
+            end
+        end
+
     end
 end
 
@@ -163,7 +172,8 @@ end
 
 function ShuttleDriveDirection:onEnterVehicle()
     local spec = self.spec_shuttleDriveDirection
-    if spec.active and ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
+    spec.active = g_ShuttleSettings.shuttleSettings.active.active;
+    if g_ShuttleSettings.shuttleSettings.active.active and ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
         spec.overlayForwards:setVisible(true)
         spec.overlayBackwards:setVisible(true)
     end
@@ -171,7 +181,7 @@ end
 
 function ShuttleDriveDirection:onLeaveVehicle()
     local spec = self.spec_shuttleDriveDirection
-    if spec.active and ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
+    if ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
         spec.overlayForwards:setVisible(false)
         spec.overlayBackwards:setVisible(false)
     end

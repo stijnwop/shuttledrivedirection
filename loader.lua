@@ -26,7 +26,7 @@ local function validateVehicleTypes(vehicleTypeManager)
 end
 
 local function inj_actionEventAccelerate(vehicle, superFunc, actionName, inputValue, ...)
-    if vehicle:getShuttleDriveActive() then
+    if g_ShuttleSettings.shuttleSettings.active.active then
         if not vehicle:isHoldingBrake() then
             local spec = vehicle.spec_drivable
             local axisAccelerate = MathUtil.clamp(inputValue, 0, 1) * vehicle:getShuttleDriveDirection()
@@ -45,7 +45,7 @@ local function inj_actionEventAccelerate(vehicle, superFunc, actionName, inputVa
 end
 
 local function inj_actionEventBrake(vehicle, superFunc, actionName, inputValue, ...)
-    if vehicle:getShuttleDriveActive() then
+    if g_ShuttleSettings.shuttleSettings.active.active then
         vehicle:setIsHoldingBrake(inputValue ~= 0)
 
         if vehicle:isHoldingBrake() and vehicle.lastSpeedReal > 0.0003 then
@@ -84,7 +84,7 @@ local function inj_actionEventBrake(vehicle, superFunc, actionName, inputValue, 
 end
 
 local function updateWheelsPhysics(vehicle, superFunc, dt, currentSpeed, acceleration, doHandbrake, stopAndGoBraking)
-    if vehicle:getShuttleDriveActive() then
+    if g_ShuttleSettings.shuttleSettings.active.active then
         local spec = vehicle.spec_drivable
         if not vehicle:getIsAIActive() and spec.cruiseControl.state ~= Drivable.CRUISECONTROL_STATE_OFF then
             acceleration = acceleration * vehicle:getShuttleDriveDirection()
@@ -93,11 +93,22 @@ local function updateWheelsPhysics(vehicle, superFunc, dt, currentSpeed, acceler
     superFunc(vehicle, dt, currentSpeed, acceleration, doHandbrake, stopAndGoBraking)
 end
 
-local function init()
+local function init(baseDirectory, modName)
     VehicleTypeManager.validateVehicleTypes = Utils.prependedFunction(VehicleTypeManager.validateVehicleTypes, validateVehicleTypes)
     WheelsUtil.updateWheelsPhysics = Utils.overwrittenFunction(WheelsUtil.updateWheelsPhysics, updateWheelsPhysics)
     Drivable.actionEventAccelerate = Utils.overwrittenFunction(Drivable.actionEventAccelerate, inj_actionEventAccelerate)
     Drivable.actionEventBrake = Utils.overwrittenFunction(Drivable.actionEventBrake, inj_actionEventBrake)
+
+    source(Utils.getFilename("scripts/ShuttleSettings.lua", baseDirectory))
+    source(Utils.getFilename("scripts/gui/newFrameReference.lua", baseDirectory))
+    source(Utils.getFilename("scripts/gui/ShuttleSettingFrame.lua", baseDirectory))
+
+    Mission00.setMissionInfo = Utils.prependedFunction(Mission00.setMissionInfo, function(mission, missionInfo, missionDynamicInfo)
+        getfenv(0).g_ShuttleSettings = ShuttleSettings:new(mission, missionInfo, missionDynamicInfo, baseDirectory, modName, g_i18n, g_gui, g_gameSettings, g_depthOfFieldManager, g_mpLoadingScreen, g_shopConfigScreen, g_mapManager)
+    end)
+
+
+    
 end
 
-init()
+init(g_currentModDirectory, g_currentModName)
