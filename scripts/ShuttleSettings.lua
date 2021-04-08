@@ -2,9 +2,8 @@ ShuttleSettings = {}
 
 local ShuttleSettings_mt = Class(ShuttleSettings)
 
-function ShuttleSettings:new(mission, missionInfo, missionDynamicInfo, baseDirectory, modName, i18n, gui, gameSettings, depthOfFieldManager, mpLoadingScreen, shopConfigScreen, mapManager)
+function ShuttleSettings:new(mission, missionInfo, missionDynamicInfo, baseDirectory, modName, modsSettingsPath, i18n, gui, gameSettings, depthOfFieldManager, mpLoadingScreen, shopConfigScreen, mapManager)
     local self = setmetatable({}, ShuttleSettings_mt)
-	print("shuttleSettings new")
 	addModEventListener(self)
 	mission:registerObjectToCallOnMissionStart(self)
 
@@ -17,6 +16,9 @@ function ShuttleSettings:new(mission, missionInfo, missionDynamicInfo, baseDirec
 	self.shopConfigScreen = shopConfigScreen
 	self.mapManager = mapManager
 	self.baseDirectory = baseDirectory
+	self.modsSettingsPath = modsSettingsPath
+
+	self.uiFilename = Utils.getFilename("resources/guidanceSteering_1080p.png", baseDirectory)
 
     self.shuttleSettings = self:createSettings();
 
@@ -50,7 +52,7 @@ function ShuttleSettings:addPage()
 
 		inGameMenu.pagingElement:addElement(pageShuttleSettings)
 		inGameMenu:registerPage(pageShuttleSettings, position, inGameMenu:makeIsGeneralSettingsEnabledPredicate())
-		inGameMenu:addPageTab(pageShuttleSettings, g_baseUIFilename, getNormalizedUVs({390, 144, 65, 65}))
+		inGameMenu:addPageTab(pageShuttleSettings, self.uiFilename, getNormalizedUVs({0, 0, 65, 65}))
 		inGameMenu.pageShuttleSettings = pageShuttleSettings
 	end
 end
@@ -90,13 +92,11 @@ function ShuttleSettings:copyModEnvironmentTexts(add)
 		if not add then
 			text = nil
 		end
-		print("name: " .. name .. " text: " .. text)
 		globalTexts[name] = text
 	end
 end
 
 function ShuttleSettings:loadMap(filename)
-	print("Shuttle setting load map")
 	local pageShuttleSettings = self.currentMission.inGameMenu.pageShuttleSettings
 	if pageShuttleSettings ~= nil then
 		pageShuttleSettings:initialize(self)
@@ -105,9 +105,35 @@ function ShuttleSettings:loadMap(filename)
 end
 
 function ShuttleSettings:onMissionStarted()
-	print("ShuttleSettings Mission started")
+	self:loadSettingsFromXMLFile()
 end
 
 function ShuttleSettings:deleteMap()
 
+end
+
+function ShuttleSettings:loadSettingsFromXMLFile(loadingState)
+	local filename = self.modsSettingsPath .. "/shuttleDriveSettings.xml"
+
+	if fileExists(filename) then
+		local xmlFile = loadXMLFile("shuttleDriveSettings", filename)
+		if xmlFile ~= nil then
+			local active = getXMLBool(xmlFile, "shuttleDriveSettings.active")
+			if active ~= nil and self.shuttleSettings.active.active ~= active then
+				self.shuttleSettings.active.active = active
+			end
+			delete(xmlFile)
+		end
+	end
+end
+
+function ShuttleSettings:saveSettingsToXMLFile()
+	local xmlFile = createXMLFile("shuttleDriveSettings", self.modsSettingsPath .. "/shuttleDriveSettings.xml", "shuttleDriveSettings")
+
+	if xmlFile ~= nil then
+		setXMLBool(xmlFile, "shuttleDriveSettings.active" , self.shuttleSettings.active.active)
+
+		saveXMLFile(xmlFile)
+		delete(xmlFile)
+	end
 end

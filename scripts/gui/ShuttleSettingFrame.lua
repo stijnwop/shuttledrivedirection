@@ -4,6 +4,7 @@ ShuttleSettingFrame = {
     CONTROLS = {
         SETTINGS_CONTAINER = "settingsContainer",
         BOX_LAYOUT = "boxLayout",
+		HEADER_ICON = "headerIcon",
         HELP_BOX = "shuttleSettingsHelpBox",
 		HELP_BOX_TEXT = "shuttleSettingsHelpBoxText",
 		CHECKBOX_ACTIVE = "checkActive",
@@ -48,7 +49,7 @@ end
 function ShuttleSettingFrame:onFrameClose()
 	ShuttleSettingFrame:superClass().onFrameClose(self)
 
-	--self:saveSettingsToXMLFile()
+	self:saveSettingsToXMLFile()
 end
 
 function ShuttleSettingFrame:onGuiSetupFinished()
@@ -62,12 +63,14 @@ function ShuttleSettingFrame:copyAttributes(src)
 end
 
 function ShuttleSettingFrame:initialize(settings)
-	print("initializing shuttleSettingFrame")
 	local shuttleSettings = settings.shuttleSettings
 	
 	self.checkboxMapping[self.checkActive] = shuttleSettings.active
 
 	self.settings = settings;
+
+	self.headerIcon:setImageFilename(settings.uiFilename)
+    self.headerIcon:setImageUVs(nil, unpack(getNormalizedUVs({0, 0, 65, 65})))
 
 	self.backButtonInfo = {
 		inputAction = InputAction.MENU_BACK
@@ -85,12 +88,12 @@ function ShuttleSettingFrame:updateButtons()
 	self:setMenuButtonInfoDirty()
 end
 
--- function ShuttleSettingFrame:saveSettingsToXMLFile()
--- 	if self.isDirty then
--- 		self.settings:saveSettingsToXMLFile(g_modsSettingsPath)
--- 		self.isDirty = false
--- 	end
--- end
+function ShuttleSettingFrame:saveSettingsToXMLFile()
+	if self.isDirty then
+		self.settings:saveSettingsToXMLFile()
+		self.isDirty = false
+	end
+end
 
 function ShuttleSettingFrame:updateShuttleSettings()
 	for element, settingsKey in pairs(self.checkboxMapping) do

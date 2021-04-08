@@ -2,7 +2,7 @@
 <GUI name="ingameMenuShuttleSettings">
 	<GuiElement type="empty" profile="uiInGameMenuFrame">
 		<GuiElement type="empty" profile="ingameMenuFrameHeaderPanel" position="130px -60px">
-			<GuiElement type="bitmap" profile="ingameMenuGeneralSettingsHeaderIcon" position="0px 0px" imageUVs="390px 144px 65px 65px"/>
+			<GuiElement type="bitmap" profile="ingameMenuGeneralSettingsHeaderIcon" position="0px 0px" id="headerIcon"/>
 			<GuiElement type="text" profile="ingameMenuFrameHeaderText" position="80px 0px" text="$l10n_Shuttle_ui_frameTitle"/>
 		</GuiElement>
 

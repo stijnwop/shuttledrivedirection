@@ -103,8 +103,11 @@ local function init(baseDirectory, modName)
     source(Utils.getFilename("scripts/gui/newFrameReference.lua", baseDirectory))
     source(Utils.getFilename("scripts/gui/ShuttleSettingFrame.lua", baseDirectory))
 
+    local modsSettingsPath = getUserProfileAppPath() .. "modsSettings/"
+	createFolder(modsSettingsPath)
+
     Mission00.setMissionInfo = Utils.prependedFunction(Mission00.setMissionInfo, function(mission, missionInfo, missionDynamicInfo)
-        getfenv(0).g_ShuttleSettings = ShuttleSettings:new(mission, missionInfo, missionDynamicInfo, baseDirectory, modName, g_i18n, g_gui, g_gameSettings, g_depthOfFieldManager, g_mpLoadingScreen, g_shopConfigScreen, g_mapManager)
+        getfenv(0).g_ShuttleSettings = ShuttleSettings:new(mission, missionInfo, missionDynamicInfo, baseDirectory, modName, modsSettingsPath, g_i18n, g_gui, g_gameSettings, g_depthOfFieldManager, g_mpLoadingScreen, g_shopConfigScreen, g_mapManager)
     end)
 
 
