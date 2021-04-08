@@ -1,70 +1,101 @@
 <?xml version="1.0" encoding="utf-8" standalone="no" ?>
 <modDesc descVersion="44">
     <author>Wopster</author>
-    <version>1.0.0.0</version>
+    <version>1.0.0.1</version>
     <title>
-        <en>ShuttleDriveDirection</en>
+      <en>ShuttleDriveDirection</en>
     </title>
     <description>
-        <en>
-            <![CDATA[ShuttleDriveDirection]]>
-        </en>
+      <en>
+        <![CDATA[ShuttleDriveDirection]]>
+      </en>
     </description>
 
     <iconFilename>icon.png</iconFilename>
 
     <multiplayer supported="true"/>
     <extraSourceFiles>
-        <sourceFile filename="loader.lua"/>
+      <sourceFile filename="loader.lua"/>
     </extraSourceFiles>
 
     <inputBinding>
-        <actionBinding action="TOGGLE_DRIVE_DIRECTION">
-            <binding device="KB_MOUSE_DEFAULT" input="KEY_space"/>
-        </actionBinding>
-        <actionBinding action="TOGGLE_DRIVE_FORWARD">
-          <binding device="KB_MOUSE_DEFAULT" input=""/>
-        </actionBinding>
-        <actionBinding action="TOGGLE_DRIVE_BACKWARD">
-          <binding device="KB_MOUSE_DEFAULT" input=""/>
-        </actionBinding>
+      <actionBinding action="TOGGLE_DRIVE_DIRECTION">
+        <binding device="KB_MOUSE_DEFAULT" input="KEY_space"/>
+      </actionBinding>
+      <actionBinding action="TOGGLE_DRIVE_FORWARD">
+        <binding device="KB_MOUSE_DEFAULT" input=""/>
+      </actionBinding>
+      <actionBinding action="TOGGLE_DRIVE_BACKWARD">
+        <binding device="KB_MOUSE_DEFAULT" input=""/>
+      </actionBinding>
     </inputBinding>
 
     <actions>
-        <action name="TOGGLE_DRIVE_DIRECTION"/>
-        <action name="TOGGLE_DRIVE_FORWARD"/>
-        <action name="TOGGLE_DRIVE_BACKWARD"/>
+      <action name="TOGGLE_DRIVE_DIRECTION"/>
+      <action name="TOGGLE_DRIVE_FORWARD"/>
+      <action name="TOGGLE_DRIVE_BACKWARD"/>
     </actions>
 
     <l10n>
-        <text name="input_TOGGLE_DRIVE_DIRECTION">
-            <en>Toggle driving direction</en>
-            <de>Fahrtrichtung wechseln</de>
-            <pl>Zmiana kierunku jazdy</pl>
-            <it>Alterna direzione di guida</it>
-        </text>
+      <text name="shuttle_activ"> 
+        <en>Active</en>
+        <de>Active</de>
+        <pl>Active</pl>
+        <it>Active</it>
+      </text>
+      <text name="shuttle_toolTip_activ">
+        <en>Setting whether shuttle control is active</en>
+        <de>Setting whether shuttle control is active</de>
+        <pl>Setting whether shuttle control is active</pl>
+        <it>Setting whether shuttle control is active</it>
+      </text>
+      <text name="Shuttle_ui_frameTitle"> 
+        <en>Shuttle Settings</en>
+        <de>Shuttle Settings</de>
+        <pl>Shuttle Settings</pl>
+        <it>Shuttle Settings</it> 
+      </text>
 
-        <text name="input_TOGGLE_DRIVE_FORWARD">
-          <en>Toggle driving direction to forward</en>
-        </text>
+      <text name="input_TOGGLE_DRIVE_DIRECTION">
+        <en>Toggle driving direction</en>
+        <de>Fahrtrichtung wechseln</de>
+        <pl>Zmiana kierunku jazdy</pl>
+        <it>Alterna direzione di guida</it>
+      </text>
 
-        <text name="input_TOGGLE_DRIVE_BACKWARD">
-          <en>Toggle driving direction to backward</en>
-        </text>
+      <text name="input_TOGGLE_DRIVE_FORWARD">
+        <en>Toggle driving direction to forward</en>
+        <de>Toggle driving direction to forward</de>
+        <pl>Toggle driving direction to forward</pl>
+        <it>Toggle driving direction to forward</it>
+      </text>
 
-        <text name="action_toggle_drive_direction">
-            <en>Change driving direction</en>
-            <de>Fahrtrichtung wechseln</de>
-            <pl>Zmień kierunek jazdy</pl>
-            <it>Cambia direzione di guida</it>
-        </text>
+      <text name="input_TOGGLE_DRIVE_BACKWARD">
+        <en>Toggle driving direction to backward</en>
+        <de>Toggle driving direction to backward</de>
+        <pl>Toggle driving direction to backward</pl>
+        <it>Toggle driving direction to backward</it>
+      </text>
 
-        <text name="action_toggle_drive_direction_forward">
-          <en>Forward</en>
-        </text>
+      <text name="action_toggle_drive_direction">
+        <en>Change driving direction</en>
+        <de>Fahrtrichtung wechseln</de>
+        <pl>Zmień kierunek jazdy</pl>
+        <it>Cambia direzione di guida</it>
+      </text>
+
+      <text name="action_toggle_drive_direction_forward">
+        <en>Forward</en>
+        <de>Forward</de>
+        <pl>Forward</pl>
+        <it>Forward</it>
+      </text>
 
       <text name="action_toggle_drive_direction_backward">
         <en>Backward</en>
+        <de>Backward</de>
+        <pl>Backward</pl>
+        <it>Backward</it>
       </text>
     </l10n>
 </modDesc>
