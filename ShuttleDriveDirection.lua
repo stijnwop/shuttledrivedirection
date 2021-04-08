@@ -22,6 +22,7 @@ end
 
 function ShuttleDriveDirection.registerFunctions(vehicleType)
     SpecializationUtil.registerFunction(vehicleType, "getShuttleDriveDirection", ShuttleDriveDirection.getShuttleDriveDirection)
+    SpecializationUtil.registerFunction(vehicleType, "getShuttleDriveActive", ShuttleDriveDirection.getShuttleDriveActive)
     SpecializationUtil.registerFunction(vehicleType, "setOnNeutral", ShuttleDriveDirection.setOnNeutral)
     SpecializationUtil.registerFunction(vehicleType, "isOnNeutral", ShuttleDriveDirection.isOnNeutral)
     SpecializationUtil.registerFunction(vehicleType, "toggleShuttleDriveDirection", ShuttleDriveDirection.toggleShuttleDriveDirection)
@@ -53,6 +54,7 @@ function ShuttleDriveDirection:onLoad(savegame)
     spec.isHoldingBrakeSent = false
     spec.blinkTime = 0
     spec.doBlink = false
+    spec.active = false
 
     local speedMeter = g_currentMission.inGameMenu.hud.speedMeter
     local baseX, baseY = speedMeter.gaugeBackgroundElement:getPosition()
@@ -127,9 +129,18 @@ function ShuttleDriveDirection:onUpdate(dt)
             end
         end
 
-        if self.setBrakeLightsVisibility ~= nil then
+        if spec.active and self.setBrakeLightsVisibility ~= nil then
             self:setBrakeLightsVisibility(spec.isHoldingBrake)
         end
+
+        if g_ShuttleSettings.shuttleSettings.active.active ~= spec.active then
+            spec.active = g_ShuttleSettings.shuttleSettings.active.active;
+            if ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
+                spec.overlayForwards:setVisible(spec.active)
+                spec.overlayBackwards:setVisible(spec.active)
+            end
+        end
+
     end
 end
 
@@ -160,16 +171,17 @@ function ShuttleDriveDirection:onStopMotor()
 end
 
 function ShuttleDriveDirection:onEnterVehicle()
-    if ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
-        local spec = self.spec_shuttleDriveDirection
+    local spec = self.spec_shuttleDriveDirection
+    spec.active = g_ShuttleSettings.shuttleSettings.active.active;
+    if g_ShuttleSettings.shuttleSettings.active.active and ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
         spec.overlayForwards:setVisible(true)
         spec.overlayBackwards:setVisible(true)
     end
 end
 
 function ShuttleDriveDirection:onLeaveVehicle()
+    local spec = self.spec_shuttleDriveDirection
     if ShuttleDriveDirection.canRenderOnCurrentVehicle(self) then
-        local spec = self.spec_shuttleDriveDirection
         spec.overlayForwards:setVisible(false)
         spec.overlayBackwards:setVisible(false)
     end
@@ -183,6 +195,10 @@ end
 
 function ShuttleDriveDirection:getShuttleDriveDirection()
     return self.spec_shuttleDriveDirection.shuttleDirection
+end
+
+function ShuttleDriveDirection:getShuttleDriveActive()
+    return self.spec_shuttleDriveDirection.active
 end
 
 function ShuttleDriveDirection:setOnNeutral()
@@ -200,6 +216,16 @@ function ShuttleDriveDirection:toggleShuttleDriveDirection()
     end
 
     self:setShuttleDriveDirection(-direction)
+end
+
+function ShuttleDriveDirection:toggleShuttleDriveDirectionForward()
+    
+    self:setShuttleDriveDirection(ShuttleDriveDirection.DIR_FORWARDS)
+end
+
+function ShuttleDriveDirection:toggleShuttleDriveDirectionBackward()
+    
+    self:setShuttleDriveDirection(ShuttleDriveDirection.DIR_BACKWARDS)
 end
 
 function ShuttleDriveDirection:setShuttleDriveDirection(direction)
@@ -236,6 +262,14 @@ function ShuttleDriveDirection:onRegisterActionEvents(isActiveForInput, isActive
             local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TOGGLE_DRIVE_DIRECTION, self, ShuttleDriveDirection.toggleShuttleDriveDirection, false, true, false, true, nil)
             g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
             g_inputBinding:setActionEventText(actionEventId, g_i18n:getText("action_toggle_drive_direction"))
+
+			local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TOGGLE_DRIVE_FORWARD, self, ShuttleDriveDirection.toggleShuttleDriveDirectionForward, false, true, false, true, nil)
+            g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
+            g_inputBinding:setActionEventText(actionEventId, g_i18n:getText("action_toggle_drive_direction_forward"))
+
+			local _, actionEventId = self:addActionEvent(spec.actionEvents, InputAction.TOGGLE_DRIVE_BACKWARD, self, ShuttleDriveDirection.toggleShuttleDriveDirectionBackward, false, true, false, true, nil)
+            g_inputBinding:setActionEventTextPriority(actionEventId, GS_PRIO_VERY_LOW)
+            g_inputBinding:setActionEventText(actionEventId, g_i18n:getText("action_toggle_drive_direction_backward"))
         end
     end
 end
